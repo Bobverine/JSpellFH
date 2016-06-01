@@ -4,21 +4,20 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Scanner;
 
-public class DictionnaryGenerator {
+public class DictionaryGenerator {
 	private String lang;
 	private HashMap<String, Float> wordList;
 	private int totalWords; 
 	
-	public DictionnaryGenerator(String lang) {
+	public DictionaryGenerator(String lang) {
 		this.lang = lang;
 		wordList = new HashMap<String, Float>();
 		totalWords = 0;
 	}
 	
-	public void generateDictionnary(String folder) {
+	public void generateDictionary(String folder) {
 		try {
 			Files.walk(Paths.get(folder)).forEach(filePath -> {
 				if(Files.isRegularFile(filePath)) {
