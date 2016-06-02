@@ -5,6 +5,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class DictionaryGenerator {
 	private String lang;
@@ -18,6 +20,7 @@ public class DictionaryGenerator {
 	}
 	
 	public void generateDictionary(String folder) {
+		Pattern p = Pattern.compile("[a-zA-Z'\\-.]+[a-zA-Z]|[a-zA-Z'-]+\\s*");
 		try {
 			Files.walk(Paths.get(folder)).forEach(filePath -> {
 				if(Files.isRegularFile(filePath)) {
@@ -30,12 +33,16 @@ public class DictionaryGenerator {
 					
 					while(sc.hasNext()) {
 						String word = sc.next().toLowerCase();
-						if(wordList.containsKey(word)) {
-							wordList.replace(word, wordList.get(word) + 1);
-						} else {
-							wordList.put(word, (float)1);
+						Matcher m = p.matcher(word);
+
+						if(m.matches()){
+							if(wordList.containsKey(word)) {
+								wordList.replace(word, wordList.get(word) + 1);
+							} else {
+								wordList.put(word, (float)1);
+							}
+							totalWords++;
 						}
-						totalWords++;
 					}
 				}
 			});
