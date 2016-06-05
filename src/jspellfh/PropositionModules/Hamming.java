@@ -1,27 +1,40 @@
 package jspellfh.PropositionModules;
 
-import java.util.HashMap;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.*;
 
 /**
  * Created by axelheine on 02/06/2016.
  */
 public class Hamming {
     private HashMap<Integer, Set<String>> zones;
-
+    private String reference;
     public Hamming(HashMap<String, Integer> dictionary) {
         this.zones = generateZones(dictionary);
+    }
+
+    public ArrayList<String> findWord(String str) {
+        int setDistance = calculateHammingDistance(str, reference);
+        ArrayList<String> bestWord = new ArrayList<>();
+        Set<String> bestSet = zones.get(setDistance);
+        int distance = -1, tmpDistance;
+        for (String s : bestSet) {
+            tmpDistance = calculateHammingDistance(str, s);
+            if(distance == -1 || tmpDistance <= distance) {
+                bestWord.add(s);
+                distance = tmpDistance;
+            }
+        }
+        return bestWord;
     }
 
     private HashMap<Integer, Set<String>> generateZones(HashMap<String, Integer> dictionary) {
         HashMap<Integer, Set<String>> map = new HashMap<>();
         Set<String> dico = dictionary.keySet();
-        String center = (String) dico.toArray()[dico.size()/2];
-        System.out.println(center);
+        reference = (String) dico.toArray()[dico.size()/2];
+        System.out.println(reference);
 
         dico.forEach(word -> {
-            int distance = calculateHammingDistance(word, center);
+            int distance = calculateHammingDistance(word, reference);
             Set<String> words = map.get(distance);
             if(words == null) {
                 words = new HashSet<>();
