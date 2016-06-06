@@ -1,10 +1,35 @@
 package jspellfh.PropositionModules;
 
+import java.util.*;
+
 /**
  * Created by axelheine on 04/06/2016.
  */
-public class Soundex {
+public class Soundex implements PropositionModule {
+    private HashMap<String, Set<String>> map;
+    private String lang;
 
+    public Soundex(HashMap<String, Integer> dictionary, String lang) {
+        this.lang = lang;
+        this.map = generateMap(dictionary);
+    }
+
+    private HashMap<String, Set<String>> generateMap(HashMap<String, Integer> dictionary) {
+        HashMap<String, Set<String>> map = new HashMap<>();
+        for(String word : dictionary.keySet()) {
+            String soundex = calculateSoundex(word, lang);
+            if(map.containsKey(soundex)) {
+                Set<String> set = map.get(soundex);
+                set.add(word);
+                map.put(soundex, set);
+            } else {
+                HashSet<String> hashSet = new HashSet<>();
+                hashSet.add(word);
+                map.put(soundex, hashSet);
+            }
+        }
+        return map;
+    }
 
     public static String calculateSoundex(String s, String lang) {
         char[] word = s.toUpperCase().toCharArray();
@@ -102,5 +127,15 @@ public class Soundex {
         }
         output = output + "0000"; //if the string is too short
         return output.substring(0, 4);
+    }
+
+
+    @Override
+    public List<String> findWords(String str) {
+        return new ArrayList(map.get(calculateSoundex(str, lang)));
+    }
+
+    public HashMap<String, Set<String>> getMap() {
+        return map;
     }
 }
