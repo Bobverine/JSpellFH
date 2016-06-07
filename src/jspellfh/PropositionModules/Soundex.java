@@ -31,7 +31,7 @@ public class Soundex implements PropositionModule {
         return map;
     }
 
-    public static String calculateSoundex(String s, String lang) {
+    public String calculateSoundex(String s, String lang) {
         char[] word = s.toUpperCase().toCharArray();
         char firstLetter = word[0];
 
