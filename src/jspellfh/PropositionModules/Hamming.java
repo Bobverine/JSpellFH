@@ -8,7 +8,7 @@ import java.util.*;
 public class Hamming implements PropositionModule{
     private HashMap<Integer, Set<String>> zones;
     private String reference;
-    public Hamming(HashMap<String, Integer> dictionary) {
+    public Hamming(HashMap<String, Float> dictionary) {
         this.zones = generateZones(dictionary);
     }
 
@@ -32,7 +32,7 @@ public class Hamming implements PropositionModule{
         return bestWord;
     }
 
-    private HashMap<Integer, Set<String>> generateZones(HashMap<String, Integer> dictionary) {
+    private HashMap<Integer, Set<String>> generateZones(HashMap<String, Float> dictionary) {
         HashMap<Integer, Set<String>> map = new HashMap<>();
         Set<String> dico = dictionary.keySet();
         reference = (String) dico.toArray()[dico.size()/2];

@@ -9,12 +9,12 @@ public class Soundex implements PropositionModule {
     private HashMap<String, Set<String>> map;
     private String lang;
 
-    public Soundex(HashMap<String, Integer> dictionary, String lang) {
+    public Soundex(HashMap<String, Float> dictionary, String lang) {
         this.lang = lang;
         this.map = generateMap(dictionary);
     }
 
-    private HashMap<String, Set<String>> generateMap(HashMap<String, Integer> dictionary) {
+    private HashMap<String, Set<String>> generateMap(HashMap<String, Float> dictionary) {
         HashMap<String, Set<String>> map = new HashMap<>();
         for(String word : dictionary.keySet()) {
             String soundex = calculateSoundex(word, lang);
