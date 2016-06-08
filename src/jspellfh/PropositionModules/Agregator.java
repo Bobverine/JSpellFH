@@ -40,7 +40,7 @@ public class Agregator {
         for (Map.Entry<String, Float> entry : wordList.entrySet()) {
             entry.setValue(entry.getValue() / wordList.size() + dictionary.get(entry.getKey()));
         }
-        System.out.println(wordList);
+
         ArrayList<String> lst = (ArrayList<String>) wordList.entrySet().stream()
                 .sorted((e1, e2) -> e2.getValue().compareTo(e1.getValue()))
                 .map(Map.Entry::getKey)
