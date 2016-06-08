@@ -22,26 +22,29 @@ public class DictionaryGenerator {
 			Scanner sc = null;
 			try {
 				sc = new Scanner(filePath);
-				//sc.useDelimiter(Pattern.compile(""));
 			} catch (IOException eIOE) {
 				System.out.println("Error with file : " + filePath + " " + eIOE);
 			}
 
-			while(sc.hasNext()) {
-				// La regex remplace les apostrophes... A corriger
-				String word = sc.next().toLowerCase().replaceAll("\\p{Ps}|\\p{Pe}|\\p{Pi}|\\p{Pf}|\\p{Pc}|\\p{Po}", "");
-				Pattern p = Pattern.compile("[a-zA-ZÀ-ÿ'\\-.]+[a-zA-ZÀ-ÿ]|[a-zA-ZÀ-ÿ'-]+\\s*");
-				Matcher m = p.matcher(word);
+			String word;
+			String[] cleaned_words;
+			/*Pattern p = Pattern.compile("[a-zA-ZÀ-ÿ'\\-.]+[a-zA-ZÀ-ÿ]|[a-zA-ZÀ-ÿ'-]+\\s*");
+			Matcher m;*/
 
-				if(m.matches()){
-					if(wordList.containsKey(word)) {
-						wordList.replace(word, wordList.get(word) + 1);
-					} else {
-						wordList.put(word, (float) 1);
-					}
-				}/* else {
-					System.out.println("Not matched : " + word);
-				}*/
+			while(sc.hasNext()) {
+				word = sc.next();
+				cleaned_words = word.split("\\p{P}");
+
+				for(String cleaned_word : cleaned_words) {
+					/*m = p.matcher(cleaned_word);
+					if(m.matches()) {*/
+						if(wordList.containsKey(cleaned_word))
+							wordList.replace(cleaned_word, wordList.get(cleaned_word) + 1);
+						else
+							wordList.put(cleaned_word, (float) 1);
+					/*} else
+						System.out.println("Not matched : " + cleaned_word);*/
+				}
 			}
 		}
 	}
