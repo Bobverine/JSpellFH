@@ -33,7 +33,7 @@ public class DictionaryGenerator {
 
 			while(sc.hasNext()) {
 				word = sc.next();
-				cleaned_words = word.split("\\p{P}");
+				cleaned_words = word.split("\\p{P}|\\s");
 
 				for(String cleaned_word : cleaned_words) {
 					/*m = p.matcher(cleaned_word);

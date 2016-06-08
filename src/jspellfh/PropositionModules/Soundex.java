@@ -151,7 +151,6 @@ public class Soundex implements PropositionModule {
 
     @Override
     public List<String> findWords(String str) {
-        System.out.println();
         String soundex = calculateSoundex(str, lang);
         if(map.containsKey(soundex)) {
             return new ArrayList(map.get(soundex));

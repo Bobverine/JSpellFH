@@ -1,8 +1,12 @@
 package jspellfh;
 
+import jspellfh.PropositionModules.Agregator;
+
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class SpellAnnotator {
@@ -55,13 +59,25 @@ public class SpellAnnotator {
 				/*m = p.matcher(cleaned_word);
 				if(m.matches()) {*/
 					if(!hm.containsKey(cleaned_word)) {
-						word = word.replace(cleaned_word, "<spell>" + cleaned_word + "</spell>");
+						Locale l = new Locale("fr");
+						Agregator a = new Agregator(hm, l);
+						ArrayList<String> propositions = a.findBestWords(cleaned_word);
+
+						StringBuilder sb = new StringBuilder("<spell>").append(cleaned_word).append("|");
+						for(int i = 0; i < propositions.size(); i++){
+							sb.append(propositions.get(i));
+							if(i < propositions.size() - 1)
+								sb.append(",");
+						}
+						sb.append("</spell>");
+
+						word = word.replace(cleaned_word, sb.toString());
 					}
 				/*} else
 					System.out.println("Not matched : " + cleaned_word);*/
 			}
 
-			System.out.println(word);
+			System.out.print(word);
 		}
 	}
 }
