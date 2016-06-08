@@ -1,9 +1,8 @@
 package jspellfh.PropositionModules;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * Created by axelheine on 08/06/2016.
@@ -24,12 +23,28 @@ public class Agregator {
     }
 
     public ArrayList<String> findBestWords(String str) {
-        ArrayList<String> wordList = new ArrayList<>();
+        HashMap<String, Float> wordList = new HashMap<>();
 
         for(PropositionModule module : modulesList) {
-            wordList.addAll(module.findWords(str));
+            ArrayList<String> words = (ArrayList<String>) module.findWords(str);
+            if(words != null) {
+                for (String w : words) {
+                    if (wordList.containsKey(w)) {
+                        wordList.put(w, wordList.get(w) + 1);
+                    } else {
+                        wordList.put(w, 1.0f);
+                    }
+                }
+            }
         }
-
-        return wordList;
+        for (Map.Entry<String, Float> entry : wordList.entrySet()) {
+            entry.setValue(entry.getValue() / wordList.size() + dictionary.get(entry.getKey()));
+        }
+        System.out.println(wordList);
+        ArrayList<String> lst = (ArrayList<String>) wordList.entrySet().stream()
+                .sorted((e1, e2) -> e2.getValue().compareTo(e1.getValue()))
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
+        return lst;
     }
 }
