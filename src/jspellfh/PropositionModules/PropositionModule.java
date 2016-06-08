@@ -7,4 +7,5 @@ import java.util.List;
  */
 public interface PropositionModule {
     List<String> findWords(String str);
+    void updateModule(String word);
 }

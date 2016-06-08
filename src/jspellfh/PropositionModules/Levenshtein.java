@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * Created by axelheine on 07/06/2016.
  */
-public class Levenshtein {
+public class Levenshtein implements PropositionModule{
     private HashMap<Integer, Set<String>> map;
     private String pivot;
 
@@ -47,6 +47,16 @@ public class Levenshtein {
             }
         }
         return bestWord;
+    }
+
+    public void updateModule(String word) {
+        int distance = compute(word, pivot);
+        Set<String> words = map.get(distance);
+        if(words == null) {
+            words = new HashSet<>();
+        }
+        words.add(word);
+        map.put(distance, words);
     }
 
     public int compute(String str1, String str2) {

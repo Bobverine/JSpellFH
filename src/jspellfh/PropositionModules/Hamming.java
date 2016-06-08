@@ -48,6 +48,16 @@ public class Hamming implements PropositionModule{
         return map;
     }
 
+    public void updateModule(String word) {
+        int distance = calculateHammingDistance(word, reference);
+        Set<String> words = zones.get(distance);
+        if(words == null) {
+            words = new HashSet<>();
+        }
+        words.add(word);
+        zones.put(distance, words);
+    }
+
     private int calculateHammingDistance(String str1, String str2) {
         char[] s1 = str1.toCharArray();
         char[] s2 = str2.toCharArray();
