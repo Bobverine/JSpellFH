@@ -1,0 +1,34 @@
+JSPELLFH v1 - Spell checker
+
+PROGRAMS
+    - DictionaryGenerator :
+        Display a dictionary based on a series of text files (UTF-8). These files can be books, supposed error free.
+    - SpellAnnotator :
+        Display a annotated version of the text wrote on System.in based on a series of dictionaries.
+        The dictionary which contains the minimum number of unknown words is selected to annotate the text to analize.
+    - SpellSelector :
+        Display an interactive interface to let the user correct the annotated text.
+        Creates an customized dictionary where unknown words are inserted by the user.
+
+HOW TO USE
+    > java jspellfh.DictionaryGenerator text_folder_path > new_dictionary.txt
+    text_folder_path    --> path to a folder which contains multiples text files
+    new_dictionary.txt  --> name and path for the newly generated dictionary
+
+    > java jspellfh.SpellAnnotator dictionary_path... < fileToAnalize > annotatedText
+    dictionary_path...  --> list of path to dictionaries
+    fileToAnalize       --> name and path to the text to analize
+    annotatedText       --> name and path to the generated annotated text
+
+    > java jspellfh.SpellSelector -d customizedDict -in annotatedText -out correctedText
+    customizedDict      --> name and path to the generated customized dictionary
+    annotatedText       --> name and path to the annotated text
+    correctedText       --> name and path to the generated corrected text
+
+AUTHORS
+Axel HEINE - IG1 G2
+Hugo FEUILLÂTRE - IR1 G1
+
+KNOWN BUGS
+SpellAnnotator can not determine the langugage of the text to analize, just the most useful dictionary.
+It make problems with the Soundex field lang ("fr" by default).
