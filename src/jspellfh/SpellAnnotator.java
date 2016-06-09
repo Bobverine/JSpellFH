@@ -19,6 +19,12 @@ public class SpellAnnotator {
 		min_unkown_index = 0;
 	}
 
+	/**
+	 * Sets the SpellAnnotator field dictionaries. Reads each dictionary,
+	 * creates an HashMap and fill it with the dictionary entries.
+	 *
+	 * @param  args  an array of String which are paths to dictionaries
+	 */
 	public void setDictionaries(String[] args){
 		/* For each dictionary path */
 		for(int i = 0; i < args.length; i++) {
@@ -42,6 +48,11 @@ public class SpellAnnotator {
 		}
 	}
 
+	/**
+	 * Sets the SpellAnnotator field text_to_analize, nb_unknown and min_unknown_index.
+	 * Gets the text from System.in, calculates the number of unknown words for each dictionary
+	 * and determine the smaller one.
+	 */
 	public void setTextAndLang(){
 		Scanner sc = new Scanner(System.in);
 		String line;
@@ -73,6 +84,11 @@ public class SpellAnnotator {
 				min_unkown_index = i;
 	}
 
+	/**
+	 * Detects every mispelled word based on the chosen dictionary (min_unknown_index).
+	 * Replaces it with a annotation composed with its possible corrections
+	 * then write the annotated text on System.out
+	 */
 	private void displayAnalizedText(){
 		String line;
 		String[] words;

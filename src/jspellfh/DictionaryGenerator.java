@@ -17,6 +17,13 @@ public class DictionaryGenerator {
 		wordList = new HashMap<>();
 	}
 
+	/**
+	 * Reads the file indicated by the filePath argument. Each word will
+	 * be added to an HashMap with his number of occurrence.
+	 *
+	 * @param filePath  path to the text that will serve to create the dictionary.
+	 *                  Supposed error free.
+	 */
 	private void readFile(Path filePath) {
 		if(Files.isRegularFile(filePath)) {
 			Scanner sc = null;
@@ -47,6 +54,14 @@ public class DictionaryGenerator {
 		}
 	}
 
+	/**
+	 * Gets files paths from the folder path argument.
+	 * Uses DictionaryGenerator.readFile method with each file path.
+	 * Changes the number of occurence of each word with its frequency.
+	 *
+	 * @param text  the string to display.  If the text is null,
+	 *              the tool tip is turned off for this component.
+	 */
 	public void generateDictionary(String folder) {
 		try {
 			/* Process each text files */
