@@ -16,6 +16,16 @@ public class SpellSelector {
     private File output;
     private File personnalDictionary;
     private ArrayList<String> ignoreAll;
+
+    /**
+     * Creates instance of SpellSelector which contains input file, output file, personal dictionary file and list of ignored words
+     * @param inp
+     *          Path to input file
+     * @param outp
+     *          Path to output file
+     * @param dict
+     *          Path to dictionary
+     */
     public SpellSelector(String inp, String outp, String dict) {
         this.input = new File(inp);
         this.output = new File(outp);
@@ -23,6 +33,12 @@ public class SpellSelector {
         this.ignoreAll = new ArrayList<>();
     }
 
+    /**
+     * Parse the input file and add words to output if no errors.
+     * If the method found a <spell> </spell> it calls userChoice to find the good word
+     * @throws IOException
+     *          If one of the file can not be opened
+     */
     /* Fonction qui lit et écrit dans les fichier input et output, si une faute est repérée (balise <spell> la ligne est passée a la fonction userChoice.*/
     private void spellSelect() throws IOException {
         Scanner sc = new Scanner(input);
@@ -42,6 +58,18 @@ public class SpellSelector {
         bw.flush();
     }
 
+    /**
+     * Prints the misspelled word with all the options.
+     * Waits the user interaction.
+     * @param word
+     *          Balise <spell> </spell>
+     * @param line
+     *          Line where found the balise
+     * @return
+     *          Word that user choices
+     * @throws IOException
+     *          If the dictionary can not be opened
+     */
     /* Fonction de selection de correction, renvoie le mot choisi par l'utilisateur.
      * Affiche les propositions et le contexte. */
     private String userChoice(String word, String line) throws IOException {
@@ -85,6 +113,7 @@ public class SpellSelector {
         return spell.get(0);
     }
 
+
     public static void main(String[] args) throws IOException {
         if(args.length < 1) {
             System.out.println("Too few arguments (use -help for help)");
@@ -115,11 +144,11 @@ public class SpellSelector {
             }
         }
         SpellSelector sl = new SpellSelector(inp, outp, dict);
-        //try {
+        try {
             sl.spellSelect();
-        /*} catch (IOException e) {
+        } catch (IOException e) {
             System.out.println( "Use : \n" +
                     "java SpellSelector -d <personnal_dictionnary> -in <file_to_correct> -out <output_file>");
-        }*/
+        }
     }
 }

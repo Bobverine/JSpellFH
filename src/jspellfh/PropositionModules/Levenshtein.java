@@ -9,11 +9,24 @@ public class Levenshtein implements PropositionModule{
     private HashMap<Integer, Set<String>> map;
     private String pivot;
 
+
+    /**
+     * Creates an instance of Levenshtein module
+     * @param dictionary
+     *          Dictionary of words
+     */
     public Levenshtein(HashMap<String, Float> dictionary) {
         this.map = generateMap(dictionary);
     }
 
     /*Génération de la map des distances. Cette fonction créé des groupes de mots pour diminuer le temps de calcul des mots proches*/
+
+    /** Generate map of laders with a word of reference (picked at the middle of the dictionary).
+     * @param dictionary
+     *          Dictionary of words
+     * @return
+     *          HashMap of words grouped by ladders
+     */
     private HashMap<Integer, Set<String>> generateMap(HashMap<String, Float> dictionary) {
         HashMap<Integer, Set<String>> map = new HashMap<>();
         Set<String> dico = dictionary.keySet();
@@ -51,7 +64,14 @@ public class Levenshtein implements PropositionModule{
         return bestWord;
     }
 
-    /*Foncton permettant de calculer la distance entre deux mots*/
+    /** Compare to words and return the distance between them.
+     * @param str1
+     *          First word
+     * @param str2
+     *          Second word
+     * @return
+     *          Distance between the words
+     */
     public int compute(String str1, String str2) {
         str1 = str1.toLowerCase();
         str2 = str2.toLowerCase();
@@ -72,6 +92,11 @@ public class Levenshtein implements PropositionModule{
         return costs[str2.length()];
     }
 
+    /**
+     * Map getter
+     * @return
+     *          Map of words by ladder
+     */
     public HashMap<Integer, Set<String>> getMap() {
         return map;
     }

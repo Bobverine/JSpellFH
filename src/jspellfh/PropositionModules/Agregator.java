@@ -11,6 +11,13 @@ public class Agregator {
     private List<PropositionModule> modulesList;
     private HashMap<String, Float> dictionary;
 
+    /**
+     * Create an instance of Agregator which create List of PropositionModules
+     * @param dictionary
+     *          Dictionary of words
+     * @param lang
+     *          Language of the dictionary
+     */
     public Agregator(HashMap<String, Float> dictionary, Locale lang) {
         this.dictionary = dictionary;
 
@@ -24,10 +31,16 @@ public class Agregator {
         modulesList.add(s);
     }
 
-    /*Fonction d'appel au différents modules. Renvoi une liste triée par ordre décroissant de fréquences d'apparition du mot.*/
+    /**
+     * Call each modules and return list of words sorted by proportion of appear
+     * @param str
+     *          Word with mistake
+     * @return
+     *          ArrayList of words sorted by proportion of appear
+     */
     public ArrayList<String> findBestWords(String str) {
         HashMap<String, Float> wordList = new HashMap<>();
-
+        //appel de chaque module pour le mot courrant
         for(PropositionModule module : modulesList) {
             ArrayList<String> words = (ArrayList<String>) module.findWords(str);
             if(words != null) {
@@ -40,6 +53,7 @@ public class Agregator {
                 }
             }
         }
+        //calcul des proportion pour chaque mot
         for (Map.Entry<String, Float> entry : wordList.entrySet()) {
             entry.setValue(entry.getValue() / wordList.size() + dictionary.get(entry.getKey()));
         }

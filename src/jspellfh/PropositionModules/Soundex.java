@@ -9,12 +9,24 @@ public class Soundex implements PropositionModule {
     private HashMap<String, Set<String>> map;
     private Locale lang;
 
+    /**
+     * Creates an instance of soundex calculator
+     * @param dictionary
+     *          Dictionary of words
+     * @param lang
+     *          Language of the dictionary
+     */
     public Soundex(HashMap<String, Float> dictionary, Locale lang) {
         this.lang = lang;
         this.map = generateMap(dictionary);
     }
 
-    /*Génération de la map des mots ayant les memes sonorités. Cette fonction créé des groupes de mots pour diminuer le temps de calcul des mots proches*/
+    /**
+     * Generate map of Soundex sonorities.
+     * @param dictionary
+     *          Words dictionary
+     * @return Hashmap of words with the same Soundex code
+     */
     private HashMap<String, Set<String>> generateMap(HashMap<String, Float> dictionary) {
         HashMap<String, Set<String>> map = new HashMap<>();
         for(String word : dictionary.keySet()) {
@@ -35,7 +47,15 @@ public class Soundex implements PropositionModule {
         return map;
     }
 
-    /*Fonction de calcul du Soundex, la locale permet de connaitre les groupes de consonnes a utiliser*/
+    /**
+     * Calculate soundex code of a word with the correct language
+     * @param s
+     *      Word to process
+     * @param lang
+     *      Language of the word
+     * @return
+     *      Soundex code of the word
+     */
     public String calculateSoundex(String s, Locale lang) {
         if(s.equals("")) {
             return null;

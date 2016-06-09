@@ -8,6 +8,12 @@ import java.util.*;
 public class Hamming implements PropositionModule{
     private HashMap<Integer, Set<String>> zones;
     private String reference;
+
+    /**
+     * Creates instance of Hamming distance module
+     * @param dictionary
+     *          Dictionary of words
+     */
     public Hamming(HashMap<String, Float> dictionary) {
         this.zones = generateZones(dictionary);
     }
@@ -33,6 +39,13 @@ public class Hamming implements PropositionModule{
         return bestWord;
     }
 
+    /**
+     * Generate map of laders with a word of reference (picked at the middle of the dictionary).
+     * @param dictionary
+     *          Dictionary of words
+     * @return
+     *          HashMap of words grouped by ladders
+     */
     /*Génération de la map des distances. Cette fonction créé des groupes de mots pour diminuer le temps de calcul des mots proches*/
     private HashMap<Integer, Set<String>> generateZones(HashMap<String, Float> dictionary) {
         HashMap<Integer, Set<String>> map = new HashMap<>();
@@ -50,6 +63,15 @@ public class Hamming implements PropositionModule{
         return map;
     }
 
+    /**
+     * Calculate hamming distance between two words
+     * @param str1
+     *          First word
+     * @param str2
+     *          Second word
+     * @return
+     *          Distance between the words
+     */
     /*Fonction de calcul de la distance de Hamming entre deux mots*/
     private int calculateHammingDistance(String str1, String str2) {
         char[] s1 = str1.toCharArray();
