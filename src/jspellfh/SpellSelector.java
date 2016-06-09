@@ -23,7 +23,7 @@ public class SpellSelector {
         this.ignoreAll = new ArrayList<>();
     }
 
-    public void spellSelect() throws IOException {
+    private void spellSelect() throws IOException {
         Scanner sc = new Scanner(input);
         BufferedWriter bw = new BufferedWriter(new FileWriter(output, true));
         while(sc.hasNextLine()) {
@@ -31,9 +31,8 @@ public class SpellSelector {
             Scanner sc2 = new Scanner(line);
             while (sc2.hasNext()) {
                 String word = sc2.next();
-                System.out.println(word);
                 if (word.contains("<spell>")) {
-                    word = userChoice(word);
+                    word = userChoice(word, line);
                 }
                 bw.write(word + " ");
             }
@@ -42,41 +41,42 @@ public class SpellSelector {
         bw.flush();
     }
 
-    private String userChoice(String word) throws IOException {
+    private String userChoice(String word, String line) throws IOException {
         ArrayList<String> spell = new ArrayList<>(Arrays.asList(word.substring(7, word.length() - 8).split("\\|")));
         spell.addAll(Arrays.asList(spell.remove(1).split(",")));
-        System.out.println(spell);
+        if(!ignoreAll.contains(spell.get(0))) {
+            System.out.println(line.replace(word, " ** " + spell.get(0) + " ** "));
+            System.out.println("Propositions : ");
+            int i;
+            for (i = 1; i < spell.size(); i++) {
+                System.out.println(i + " - replace with " + spell.get(i));
+            }
+            System.out.println(i + 1 + " - ignore the misspelled word " + spell.get(0));
+            System.out.println(i + 2 + " - ignore all the occurences of the misspelled word " + spell.get(0));
+            System.out.println(i + 3 + " - add the word " + spell.get(0) + " in " + personnalDictionary.getName());
 
-        System.out.println("Propositions : ");
-        int i;
-        for(i = 1; i < spell.size(); i++) {
-            System.out.println(i + " - replace with " + spell.get(i));
-        }
-        System.out.println(i+1 + " - ignore the misspelled word " + spell.get(0));
-        System.out.println(i+2 + " - ignore all the occurences of the misspelled word " + spell.get(0));
-        System.out.println(i+3 + " - add the word " + spell.get(0) + " in " + personnalDictionary.getName());
-
-        Scanner sc = new Scanner(System.in);
-        if(sc.hasNext()) {
-            String number = sc.next();
-            for(i = 1; i < spell.size(); i++) {
-                if(number.equals(Integer.toString(i))) {
-                    return spell.get(i);
+            Scanner sc = new Scanner(System.in);
+            if (sc.hasNext()) {
+                String number = sc.next();
+                for (i = 1; i < spell.size(); i++) {
+                    if (number.equals(Integer.toString(i))) {
+                        return spell.get(i);
+                    }
                 }
-            }
-            if(number.equals(Integer.toString(i+1))) {
-                return spell.get(0);
-            }
-            if(number.equals(Integer.toString(i+2))) {
-                ignoreAll.add(spell.get(0));
-                return spell.get(0);
-            }
-            if(number.equals(Integer.toString(i+3))) {
-                BufferedWriter bw = new BufferedWriter(new FileWriter(personnalDictionary, true));
-                bw.write(spell.get(0) + "\n");
-                bw.flush();
-                ignoreAll.add(spell.get(0));
-                return spell.get(0);
+                if (number.equals(Integer.toString(i + 1))) {
+                    return spell.get(0);
+                }
+                if (number.equals(Integer.toString(i + 2))) {
+                    ignoreAll.add(spell.get(0));
+                    return spell.get(0);
+                }
+                if (number.equals(Integer.toString(i + 3))) {
+                    BufferedWriter bw = new BufferedWriter(new FileWriter(personnalDictionary, true));
+                    bw.write(spell.get(0) + "\n");
+                    bw.flush();
+                    ignoreAll.add(spell.get(0));
+                    return spell.get(0);
+                }
             }
         }
         return spell.get(0);
