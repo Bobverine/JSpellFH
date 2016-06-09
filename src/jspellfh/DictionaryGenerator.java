@@ -59,8 +59,7 @@ public class DictionaryGenerator {
 	 * Uses DictionaryGenerator.readFile method with each file path.
 	 * Changes the number of occurence of each word with its frequency.
 	 *
-	 * @param text  the string to display.  If the text is null,
-	 *              the tool tip is turned off for this component.
+	 * @param folder path to the folder containing texts
 	 */
 	public void generateDictionary(String folder) {
 		try {
