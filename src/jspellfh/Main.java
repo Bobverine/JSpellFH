@@ -1,9 +1,6 @@
 package jspellfh;
 
 import jspellfh.PropositionModules.Agregator;
-import jspellfh.PropositionModules.Hamming;
-import jspellfh.PropositionModules.Levenshtein;
-import jspellfh.PropositionModules.Soundex;
 
 import java.util.Locale;
 
