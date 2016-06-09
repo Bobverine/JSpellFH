@@ -33,17 +33,15 @@ public class DictionaryGenerator {
 
 			while(sc.hasNext()) {
 				word = sc.next();
-				cleaned_words = word.split("\\p{P}|\\s");
+				cleaned_words = word.split("\\p{P}|\\s"); /* Remove punction and whitespaces */
 
+				/* For each word */
 				for(String cleaned_word : cleaned_words) {
-					/*m = p.matcher(cleaned_word);
-					if(m.matches()) {*/
-						if(wordList.containsKey(cleaned_word))
-							wordList.replace(cleaned_word, wordList.get(cleaned_word) + 1);
-						else
-							wordList.put(cleaned_word, (float) 1);
-					/*} else
-						System.out.println("Not matched : " + cleaned_word);*/
+					/* if it is already in the dictionary */
+					if(wordList.containsKey(cleaned_word))
+						wordList.replace(cleaned_word, wordList.get(cleaned_word) + 1); /* add +1 occurrence */
+					else
+						wordList.put(cleaned_word, (float) 1); /* add it to the dictionary */
 				}
 			}
 		}
@@ -51,8 +49,9 @@ public class DictionaryGenerator {
 
 	public void generateDictionary(String folder) {
 		try {
+			/* Process each text files */
 			Files.walk(Paths.get(folder)).forEach(filePath -> readFile(filePath));
-			/* Update word frequency */
+			/* Update word occurrence to frequency */
 			for(Map.Entry<String, Float> entry : wordList.entrySet())
 				entry.setValue(entry.getValue() / wordList.size());
 		} catch (IOException eIOE) {
