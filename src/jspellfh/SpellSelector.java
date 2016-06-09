@@ -23,6 +23,7 @@ public class SpellSelector {
         this.ignoreAll = new ArrayList<>();
     }
 
+    /* Fonction qui lit et écrit dans les fichier input et output, si une faute est repérée (balise <spell> la ligne est passée a la fonction userChoice.*/
     private void spellSelect() throws IOException {
         Scanner sc = new Scanner(input);
         BufferedWriter bw = new BufferedWriter(new FileWriter(output, true));
@@ -41,6 +42,8 @@ public class SpellSelector {
         bw.flush();
     }
 
+    /* Fonction de selection de correction, renvoie le mot choisi par l'utilisateur.
+     * Affiche les propositions et le contexte. */
     private String userChoice(String word, String line) throws IOException {
         ArrayList<String> spell = new ArrayList<>(Arrays.asList(word.substring(7, word.length() - 8).split("\\|")));
         spell.addAll(Arrays.asList(spell.remove(1).split(",")));

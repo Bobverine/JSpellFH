@@ -12,6 +12,7 @@ public class Hamming implements PropositionModule{
         this.zones = generateZones(dictionary);
     }
 
+    @Override
     public List<String> findWords(String str) {
         int setDistance = calculateHammingDistance(str, reference);
         ArrayList<String> bestWord = new ArrayList<>();
@@ -32,6 +33,7 @@ public class Hamming implements PropositionModule{
         return bestWord;
     }
 
+    /*Génération de la map des distances. Cette fonction créé des groupes de mots pour diminuer le temps de calcul des mots proches*/
     private HashMap<Integer, Set<String>> generateZones(HashMap<String, Float> dictionary) {
         HashMap<Integer, Set<String>> map = new HashMap<>();
         Set<String> dico = dictionary.keySet();
@@ -48,16 +50,7 @@ public class Hamming implements PropositionModule{
         return map;
     }
 
-    public void updateModule(String word) {
-        int distance = calculateHammingDistance(word, reference);
-        Set<String> words = zones.get(distance);
-        if(words == null) {
-            words = new HashSet<>();
-        }
-        words.add(word);
-        zones.put(distance, words);
-    }
-
+    /*Fonction de calcul de la distance de Hamming entre deux mots*/
     private int calculateHammingDistance(String str1, String str2) {
         char[] s1 = str1.toCharArray();
         char[] s2 = str2.toCharArray();

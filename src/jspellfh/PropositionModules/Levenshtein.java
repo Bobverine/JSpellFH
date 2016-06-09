@@ -13,6 +13,7 @@ public class Levenshtein implements PropositionModule{
         this.map = generateMap(dictionary);
     }
 
+    /*Génération de la map des distances. Cette fonction créé des groupes de mots pour diminuer le temps de calcul des mots proches*/
     private HashMap<Integer, Set<String>> generateMap(HashMap<String, Float> dictionary) {
         HashMap<Integer, Set<String>> map = new HashMap<>();
         Set<String> dico = dictionary.keySet();
@@ -29,6 +30,7 @@ public class Levenshtein implements PropositionModule{
         return map;
     }
 
+    @Override
     public List<String> findWords(String str) {
         int setDistance = compute(str, pivot);
         ArrayList<String> bestWord = new ArrayList<>();
@@ -49,16 +51,7 @@ public class Levenshtein implements PropositionModule{
         return bestWord;
     }
 
-    public void updateModule(String word) {
-        int distance = compute(word, pivot);
-        Set<String> words = map.get(distance);
-        if(words == null) {
-            words = new HashSet<>();
-        }
-        words.add(word);
-        map.put(distance, words);
-    }
-
+    /*Foncton permettant de calculer la distance entre deux mots*/
     public int compute(String str1, String str2) {
         str1 = str1.toLowerCase();
         str2 = str2.toLowerCase();

@@ -13,15 +13,18 @@ public class Agregator {
 
     public Agregator(HashMap<String, Float> dictionary, Locale lang) {
         this.dictionary = dictionary;
+
         Levenshtein l = new Levenshtein(dictionary);
         Hamming h = new Hamming(dictionary);
         Soundex s = new Soundex(dictionary, lang);
+
         modulesList = new ArrayList<>();
         modulesList.add(l);
         modulesList.add(h);
         modulesList.add(s);
     }
 
+    /*Fonction d'appel au différents modules. Renvoi une liste triée par ordre décroissant de fréquences d'apparition du mot.*/
     public ArrayList<String> findBestWords(String str) {
         HashMap<String, Float> wordList = new HashMap<>();
 
@@ -41,6 +44,7 @@ public class Agregator {
             entry.setValue(entry.getValue() / wordList.size() + dictionary.get(entry.getKey()));
         }
 
+        //tri par ordre décroissant de la map et transformation en liste.
         ArrayList<String> lst = (ArrayList<String>) wordList.entrySet().stream()
                 .sorted((e1, e2) -> e2.getValue().compareTo(e1.getValue()))
                 .map(Map.Entry::getKey)

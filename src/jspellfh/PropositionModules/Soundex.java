@@ -14,6 +14,7 @@ public class Soundex implements PropositionModule {
         this.map = generateMap(dictionary);
     }
 
+    /*Génération de la map des mots ayant les memes sonorités. Cette fonction créé des groupes de mots pour diminuer le temps de calcul des mots proches*/
     private HashMap<String, Set<String>> generateMap(HashMap<String, Float> dictionary) {
         HashMap<String, Set<String>> map = new HashMap<>();
         for(String word : dictionary.keySet()) {
@@ -34,6 +35,7 @@ public class Soundex implements PropositionModule {
         return map;
     }
 
+    /*Fonction de calcul du Soundex, la locale permet de connaitre les groupes de consonnes a utiliser*/
     public String calculateSoundex(String s, Locale lang) {
         if(s.equals("")) {
             return null;
@@ -134,20 +136,6 @@ public class Soundex implements PropositionModule {
         output = output + "0000"; //if the string is too short
         return output.substring(0, 4);
     }
-
-    public void updateModule(String word) {
-        String soundex = calculateSoundex(word, lang);
-        if(map.containsKey(soundex)) {
-            Set<String> set = map.get(soundex);
-            set.add(word);
-            map.put(soundex, set);
-        } else {
-            HashSet<String> hashSet = new HashSet<>();
-            hashSet.add(word);
-            map.put(soundex, hashSet);
-        }
-    }
-
 
     @Override
     public List<String> findWords(String str) {
