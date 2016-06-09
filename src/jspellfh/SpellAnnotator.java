@@ -91,9 +91,9 @@ public class SpellAnnotator {
 					ArrayList<String> propositions = a.findBestWords(word);
 					/* Construct the annotation string to replace the mispelled word */
 					StringBuilder annotation = new StringBuilder("<spell>").append(word).append("|");
-					for(i = 0; i < 7/*propositions.size()*/; i++){
+					for(i = 0; i < ((propositions.size() > 7) ? 7 : propositions.size()); i++){
 						annotation.append(propositions.get(i));
-						if(i < 6/*propositions.size() - 1*/)
+						if(i < ((propositions.size() - 1 > 6) ? 6 : propositions.size() - 1))
 							annotation.append(",");
 					}
 					annotation.append("</spell>");
